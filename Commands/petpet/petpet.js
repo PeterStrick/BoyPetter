@@ -36,12 +36,12 @@ module.exports = {
         {
             name: "resolution",
             description: "The Resolution of the GIF in Pixels",
-            type: 3,
+            type: 4,
         },
         {
             name: "delay",
             description: "The Delay of each Frame in ms",
-            type: 3,
+            type: 4,
         },
     ],
 
@@ -52,8 +52,8 @@ module.exports = {
     run: async (client, interaction) => {
 
         // Get GIF Resolution and Delay, if unset then use Defaults
-        var GIF_resolution = interaction.options.getUser('resolution');
-        var GIF_delay = interaction.options.getUser('delay');
+        var GIF_resolution = interaction.options.get('resolution');
+        var GIF_delay = interaction.options.get('delay');
         if (!GIF_resolution) {GIF_resolution = 128};
         if (!GIF_delay) {GIF_delay = 20};
 
