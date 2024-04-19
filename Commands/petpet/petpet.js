@@ -1,0 +1,92 @@
+const { CommandInteraction } = require("discord.js");
+const Bot = require("../../handlers/client");
+const petPetGif = require('pet-pet-gif');
+const axios = require("axios");
+const sharp = require("sharp");
+const fs = require("fs");
+
+module.exports = {
+    name: "petpet",
+    description: `Pet all the Boys!`,
+    type: "CHAT",
+    install: "BOTH",
+    options: [
+        {
+            name: "user",
+            description: "The Boy to pet",
+            type: 6,
+            required: true,
+        },
+        {
+            name: "pfp",
+            description: "Profile Picture to use",
+            required: true,
+            type: 4,
+            choices: [
+                {
+                    name: "Server Profile Picture",
+                    value: 1,
+                },
+                {
+                    name: "User Profile Picture",
+                    value: 2,
+                },
+            ],
+        },
+        {
+            name: "resolution",
+            description: "The Resolution of the GIF in Pixels",
+            type: 3,
+        },
+        {
+            name: "delay",
+            description: "The Delay of each Frame in ms",
+            type: 3,
+        },
+    ],
+
+    /**
+    * @param {Bot} client
+    * @param {CommandInteraction} interaction
+    */
+    run: async (client, interaction) => {
+
+        // Get GIF Resolution and Delay, if unset then use Defaults
+        var GIF_resolution = interaction.options.getUser('resolution');
+        var GIF_delay = interaction.options.getUser('delay');
+        if (!GIF_resolution) {GIF_resolution = 128};
+        if (!GIF_delay) {GIF_delay = 20};
+
+        const boyMember = interaction.options.getMember('user');
+        const boy = interaction.options.getUser('user');
+
+        console.log(`[${interaction.id}]: Getting WebP`)
+
+        var stupidAssWebP;
+
+        if (interaction.options.get('pfp') == 1) {
+            stupidAssWebP = await axios.get(boyMember.displayAvatarURL(), {
+                responseType: 'arraybuffer',
+            });
+        } else {
+            stupidAssWebP = await axios.get(boy.displayAvatarURL(), {
+                responseType: 'arraybuffer',
+            });
+        }
+        
+
+        console.log(`[${interaction.id}]: Converting to PNG`)
+        const goodPNG = await sharp(stupidAssWebP.data).toFormat('png').toBuffer();
+
+        console.log(`[${interaction.id}]: Generating PetPet GIF`)
+        let animatedGif = await petPetGif(goodPNG, {
+            resolution: GIF_resolution, // The width (or height) of the generated gif
+            delay: GIF_delay, // Delay between each frame in milliseconds. Defaults to 20.
+            backgroundColor: null, // Other values could be the string "rgba(123, 233, 0, 0.5)". Defaults to null - i.e. transparent.
+        });
+
+        console.log(`[${interaction.id}]: Sending message`)
+        const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `petpet-${boy.id}.gif` }]})
+        await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, })
+    }
+}
