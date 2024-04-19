@@ -1,4 +1,4 @@
-const { CommandInteraction } = require("discord.js");
+const { CommandInteraction, AttachmentBuilder } = require("discord.js");
 const Bot = require("../../handlers/client");
 const petPetGif = require('pet-pet-gif');
 const axios = require("axios");
@@ -87,8 +87,10 @@ module.exports = {
             backgroundColor: null, // Other values could be the string "rgba(123, 233, 0, 0.5)". Defaults to null - i.e. transparent.
         });
 
+        const attachment = new AttachmentBuilder(animatedGif, { name: 'mainPage.png', width: GIF_resolution, height: GIF_resolution });
+
         console.log(`[${interaction.id}]: Sending message`)
-        const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `petpet-${boy.id}.gif`, width: GIF_resolution, height: GIF_resolution }]});
+        const msg = await interaction.followUp({files: [{ attachment: attachment, name: `petpet-${boy.id}.gif` }]});
         if (interaction.user.avatar === interaction.member.avatar) {
             await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
         } else {
