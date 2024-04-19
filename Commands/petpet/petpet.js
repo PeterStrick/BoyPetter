@@ -57,7 +57,6 @@ module.exports = {
         if (!GIF_resolution) {GIF_resolution = 128};
         if (!GIF_delay) {GIF_delay = 20};
 
-        const boyMember = interaction.options.getMember('user');
         const boy = interaction.options.getUser('user');
 
         console.log(`[${interaction.id}]: Getting WebP`)
@@ -65,9 +64,12 @@ module.exports = {
         var stupidAssWebP;
 
         if (interaction.options.get('pfp') == 1) {
-            stupidAssWebP = await axios.get(boyMember.displayAvatarURL(), {
-                responseType: 'arraybuffer',
-            });
+            if (!interaction.member) {
+                interaction.followUp({ content: `This only works in servers`, ephemeral: true });
+                return;
+            } else {
+                stupidAssWebP = `https://cdn.discordapp.com/guilds/${boy.guildId}/users/${boy.user.id}/avatars/${boy.member.avatar}.png?size=4096`;
+            }
         } else {
             stupidAssWebP = await axios.get(boy.displayAvatarURL(), {
                 responseType: 'arraybuffer',
@@ -78,7 +80,7 @@ module.exports = {
         console.log(`[${interaction.id}]: Converting to PNG`)
         const goodPNG = await sharp(stupidAssWebP.data).toFormat('png').toBuffer();
 
-        console.log(`[${interaction.id}]: Generating PetPet GIF`)
+        console.log(`[${interaction.id}]: Generating PetPet GIF`);
         let animatedGif = await petPetGif(goodPNG, {
             resolution: GIF_resolution, // The width (or height) of the generated gif
             delay: GIF_delay, // Delay between each frame in milliseconds. Defaults to 20.
@@ -86,7 +88,11 @@ module.exports = {
         });
 
         console.log(`[${interaction.id}]: Sending message`)
-        const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `petpet-${boy.id}.gif` }]})
-        await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, })
+        const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `petpet-${boy.id}.gif` }]});
+        if (interaction.user.avatar === interaction.member.avatar) {
+            await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
+        } else {
+            await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, });
+        }
     }
 }
