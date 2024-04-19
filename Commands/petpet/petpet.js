@@ -68,7 +68,7 @@ module.exports = {
                 interaction.followUp({ content: `This only works in servers`, ephemeral: true });
                 return;
             } else {
-                stupidAssWebP = `https://cdn.discordapp.com/guilds/${boy.guildId}/users/${boy.user.id}/avatars/${boy.member.avatar}.png?size=4096`;
+                stupidAssWebP = `https://cdn.discordapp.com/guilds/${boy.guildId}/users/${boy.user.id}/avatars/${boy.member.avatar}.webp?size=4096`;
             }
         } else {
             stupidAssWebP = await axios.get(boy.displayAvatarURL(), {
