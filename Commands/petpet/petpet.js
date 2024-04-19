@@ -52,7 +52,7 @@ module.exports = {
     run: async (client, interaction) => {
 
         // Get GIF Resolution and Delay, if unset then use Defaults
-        var GIF_resolution = interaction.options.get('resolution');
+        var GIF_resolution = interaction.options.getInteger('resolution');
         var GIF_delay = interaction.options.get('delay');
         if (!GIF_resolution) {GIF_resolution = 128};
         if (!GIF_delay) {GIF_delay = 20};
@@ -88,7 +88,7 @@ module.exports = {
         });
 
         console.log(`[${interaction.id}]: Sending message`)
-        const msg = await interaction.followUp({files: [{ attachment: attachment, name: `petpet-${boy.id}.gif` }]});
+        const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `petpet-${boy.id}.gif` }]});
         if (interaction.user.avatar === interaction.member.avatar) {
             await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
         } else {
