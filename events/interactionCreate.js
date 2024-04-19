@@ -24,7 +24,7 @@ client.on("interactionCreate", async (interaction) => {
             }
 
             if (cooldown(interaction, cmd)) {
-                interaction.reply(util.format(Strings.cooldown, cooldown(interaction, cmd).toFixed()));
+                interaction.reply(`Cooldown ${cooldown(interaction, cmd).toFixed()}`);
                 return;
             } else {
                 cmd.run(client, interaction, args)
@@ -40,7 +40,7 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 function cooldown(interaction, cmd) {
-    if (!interaction || !cmd) return;
+    if (!interaction || !cmd || !interaction.guild) return;
     let { client, member } = interaction;
     if (!client.cooldowns.has(cmd.name)) {
         client.cooldowns.set(cmd.name, new Collection());
