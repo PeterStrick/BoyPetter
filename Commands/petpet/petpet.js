@@ -87,10 +87,10 @@ module.exports = {
             backgroundColor: null, // Other values could be the string "rgba(123, 233, 0, 0.5)". Defaults to null - i.e. transparent.
         });
 
-        const attachment = new AttachmentBuilder(animatedGif, { name: 'mainPage.png', width: GIF_resolution, height: GIF_resolution });
+        const attachment = new AttachmentBuilder(animatedGif.toBuffer(), { name: `petpet-${boy.id}.gif`, width: GIF_resolution, height: GIF_resolution });
 
         console.log(`[${interaction.id}]: Sending message`)
-        const msg = await interaction.followUp({files: [{ attachment: attachment, name: `petpet-${boy.id}.gif` }]});
+        const msg = await interaction.followUp({files: [{ attachment: attachment }]});
         if (interaction.user.avatar === interaction.member.avatar) {
             await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
         } else {
