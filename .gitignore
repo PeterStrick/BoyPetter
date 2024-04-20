@@ -1,0 +1,5 @@
+# Ignore NPM
+node_modules/*
+
+# Ignore .env
+settings/.env
