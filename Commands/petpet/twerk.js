@@ -211,16 +211,16 @@ async function createGIF(top, bottom, options) {
         // Top face
         if (i != 5 && resizedTop) {
             const offsetX = 6;
-            const offsetY = i < 5 ? 3 + i * 1.5 : 9 - (i - 4) * 2;
+            const offsetY = i < 5 ? 1 + i * 1.7 : 7.8 - (i - 4) * 1.7;
             ctx.drawImage(resizedTop, offsetX, offsetY, 50, 50);
         }
 
         // Bottom face
         if (i != 7 && resizedBottom) {
-            const offsetX = i < 5 ? 60 + i * 3.125 : 70 - (i - 4) * 3.75; //poop
-            const offsetY = i < 5 ? 100 - i * 3.125 : 87.5 + (i - 4) * 3.75; //poop
-            const j = i < 5 ? 65 - i * 6.25 : 40 + (i - 4) * 8.3;
-            const k = i < 5 ? 40 + i * 6.25 : 65 - (i - 4) * 8.3;
+            const offsetX = i < 4 ? 78 + i * 1 : 81 - (i -3) * 1//75
+            const offsetY = i < 4 ? 104 - i * 3.5 : 92.5 + (i -3) * 3.5 //100
+            const j = 40
+            const k = i < 4 ? 28.9 + i * 3.7 : 40 - (i -3) * 3.7
             ctx.drawImage(resizedBottom, offsetX, offsetY, j, k);
         }
 
