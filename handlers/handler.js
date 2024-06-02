@@ -23,44 +23,32 @@ module.exports = async (client) => {
       if (command.name) {
         switch (command.type) {
           case "CHAT":
-            {
-              command.type = ApplicationCommandType.ChatInput;
-            }
+            command.type = ApplicationCommandType.ChatInput;
             break;
           case "MESSAGE":
-            {
-              command.type = ApplicationCommandType.Message;
-            }
+            command.type = ApplicationCommandType.Message;
             break;
           case "USER":
-            {
-              command.type = ApplicationCommandType.User;
-            }
+            command.type = ApplicationCommandType.User;
             break;
           default:
             break;
         }
         switch (command.install) {
           case "GUILD":
-            {
-              command.integration_types = [0];
-              command.contexts = [0, 1];
-              delete command.install;
-            }
+            command.integration_types = [0];
+            command.contexts = [0, 1];
+            delete command.install;
             break;
           case "USER":
-            {
-              command.integration_types = [1];
-              command.contexts = [0, 1, 2];
-              delete command.install;
-            }
+            command.integration_types = [1];
+            command.contexts = [0, 1, 2];
+            delete command.install;
             break;
           case "BOTH":
-            {
-              command.integration_types = [0, 1];
-              command.contexts = [0, 1, 2];
-              delete command.install;
-            }
+            command.integration_types = [0, 1];
+            command.contexts = [0, 1, 2];
+            delete command.install;
             break;
           default:
             break;
@@ -69,29 +57,19 @@ module.exports = async (client) => {
           command.options.forEach((option) => {
             switch (option.type) {
               case "STRING":
-                {
-                  option.type = ApplicationCommandOptionType.String;
-                }
+                option.type = ApplicationCommandOptionType.String;
                 break;
               case "NUMBER":
-                {
-                  option.type = ApplicationCommandOptionType.Number;
-                }
+                option.type = ApplicationCommandOptionType.Number;
                 break;
               case "ROLE":
-                {
-                  option.type = ApplicationCommandOptionType.Role;
-                }
+                option.type = ApplicationCommandOptionType.Role;
                 break;
               case "SUB_COMMAND":
-                {
-                  option.type = ApplicationCommandOptionType.Subcommand;
-                }
+                option.type = ApplicationCommandOptionType.Subcommand;
                 break;
               case "SUB_COMMAND_GROUP":
-                {
-                  option.type = ApplicationCommandOptionType.SubcommandGroup;
-                }
+                option.type = ApplicationCommandOptionType.SubcommandGroup;
                 break;
               default:
                 break;

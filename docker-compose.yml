@@ -7,4 +7,3 @@ services:
     tty: true
     env_file: settings/.env
     restart: always
-

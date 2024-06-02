@@ -78,20 +78,21 @@ module.exports = {
     run: async (client, interaction) => {
 
         // Get GIF Resolution and Delay, if unset then use Defaults
-        var GIF_resolution = interaction.options.getInteger('resolution');
-        var GIF_delay = interaction.options.getInteger('delay');
-        GIF_resolution ? GIF_resolution : GIF_resolution = 128;
-        GIF_delay ? GIF_delay : GIF_delay = 80;
+        let GIF_resolution = interaction.options.getInteger('resolution');
+        let GIF_delay = interaction.options.getInteger('delay');
+
+        if (!GIF_resolution) { GIF_resolution = 128 }
+        if (!GIF_delay) { GIF_delay = 80 }
 
         const top = interaction.options.getUser('top') || false;
         const bottom = interaction.options.getUser('bottom') || false;
 
         console.log(`[${interaction.id}]: Getting WebP`)
 
-        var stupidAssWebPTop;
-        var stupidAssWebPBottom;
-        var topPng = false;
-        var bottomPng = false;
+        let stupidAssWebPTop;
+        let stupidAssWebPBottom;
+        let topPng = false;
+        let bottomPng = false;
 
         if (!top && !bottom) {
             interaction.followUp({ content: `You have to choose at least one`, ephemeral: true });
@@ -147,7 +148,12 @@ module.exports = {
         });
 
         console.log(`[${interaction.id}]: Sending message`)
-        const name = top && bottom ? `${top}twerkingto${bottom}` : top ? `${top}twerking` : bottom ? `twerkedto${bottom}` : `error`;
+        
+        let name = `error`;
+        if (top && bottom) { name = `${top}twerkingto${bottom}` }
+        if (!bottom) { name = `${top}twerking` }
+        if (!top) { name = `twerkedto${bottom}` }
+
         const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `twerk-${name}.gif` }]});
         if (interaction.user.avatar === interaction.member.avatar) {
             await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
@@ -174,8 +180,8 @@ async function createGIF(top, bottom, options) {
     const ctx = canvas.getContext('2d');
 
     // Load and resize the face image
-    var resizedTop = false;
-    var resizedBottom = false;
+    let resizedTop = false;
+    let resizedBottom = false;
     if (top) {
         const face = await Canvas.loadImage(top);
         const resizedCanvas = Canvas.createCanvas(50, 50);

@@ -59,5 +59,5 @@ module.exports = async (avatarURL, options = {}) => {
     }
 
     encoder.finish()
-    return result = await buffer(stream);
+    return await buffer(stream);
 }

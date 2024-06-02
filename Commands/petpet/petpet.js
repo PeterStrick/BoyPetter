@@ -52,8 +52,8 @@ module.exports = {
     run: async (client, interaction) => {
 
         // Get GIF Resolution and Delay, if unset then use Defaults
-        var GIF_resolution = interaction.options.getInteger('resolution');
-        var GIF_delay = interaction.options.get('delay');
+        let GIF_resolution = interaction.options.getInteger('resolution');
+        let GIF_delay = interaction.options.get('delay');
         if (!GIF_resolution) {GIF_resolution = 128};
         if (!GIF_delay) {GIF_delay = 20};
 
@@ -61,7 +61,7 @@ module.exports = {
 
         console.log(`[${interaction.id}]: Getting WebP`)
 
-        var stupidAssWebP;
+        let stupidAssWebP;
 
         if (interaction.options.get('pfp') == 1) {
             if (!interaction.member) {
