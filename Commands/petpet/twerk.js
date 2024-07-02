@@ -155,11 +155,7 @@ module.exports = {
         if (!top) { name = `twerkedto${bottom}` }
 
         const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `twerk-${name}.gif` }]});
-        if (interaction.user.avatar === interaction.member.avatar) {
-            await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
-        } else {
-            await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, });
-        }
+        await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, });
     }
 }
 

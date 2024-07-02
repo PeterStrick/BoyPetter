@@ -89,10 +89,6 @@ module.exports = {
 
         console.log(`[${interaction.id}]: Sending message`)
         const msg = await interaction.followUp({files: [{ attachment: animatedGif, name: `petpet-${boy.id}.gif` }]});
-        if (interaction.user.avatar === interaction.member.avatar) {
-            await interaction.editReply({content: `This user does not have a server avatar\n[Link](<${msg.attachments.first().proxyURL}>)`, });
-        } else {
-            await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, });
-        }
+        await interaction.editReply({content: `[Link](<${msg.attachments.first().proxyURL}>)`, });
     }
 }
