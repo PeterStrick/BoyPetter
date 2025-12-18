@@ -1,3 +1,6 @@
+> [!WARNING]
+> This Repository has moved to GitLab and is now read-only
+
 # BoyPetter
 You like petting Boys, don't you?
 
